@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
 import * as ROUTES from "./routes";
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import "./styles/index.scss";
 
 //PAGE COMPONENTS
 import Home from "./pages/Home";
