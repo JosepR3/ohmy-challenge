@@ -24,7 +24,7 @@ export async function normalizeResponse(promise = Promise.resolve) {
 
 export function makeRequest(
   httpClient = axios,
-  baseURL = process.env.REACT_APP_API_BASE_URL,
+  baseURL = "https://my-json-server.typicode.com/JosepR3/ohmy-challenge/todos",
   baseHeaders = {
     Accept: "application/json",
   },
@@ -43,10 +43,6 @@ export function makeRequest(
         headers: {
           ...baseHeaders,
           ...headers,
-        },
-        validateStatus: function validateStatus(status) {
-          // Resolve only if the status code is in the 200 range
-          return status >= 200 && status < 400;
         },
       }),
     );

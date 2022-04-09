@@ -1,5 +1,5 @@
 const initialState = {
-  todoList: [],
+  todosList: [],
   todo: {
     userId: 0,
     title: "",

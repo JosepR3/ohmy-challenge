@@ -1,156 +1,59 @@
 import { makeRequest } from "./api-utils";
-import axios from "axios";
 
 function makeApi(request = makeRequest()) {
-  function signUp(headers, data) {
+  
+  function fetchAllTodos() {
     return request({
-      url: "/sign-up",
-      requestMethod: "POST",
-      headers: headers,
-      data: data,
+      url: "/",
+      requestMethod: "GET",
     });
   }
 
-  function signOut(headers) {
+  function fetchTodo( id ) {
     return request({
-      url: "/sign-out",
-      requestMethod: "POST",
-      headers: headers,
+      url: `/${id}`,
+      requestMethod: "GET",
     });
   }
 
-  function editUser({ headers, body }) {
+  function updateTodo( id, body ) {
     return request({
-      url: "/edit-user",
-      requestMethod: "PUT",
+      url: `/${id}`,
+      requestMethod: "PATCH",
       body: body,
-      headers: headers,
     });
   }
 
-  function getUser({ headers }) {
+  function deleteTodo( id ) {
     return request({
-      url: "/get-user",
-      requestMethod: "GET",
-      headers: headers,
+      url: `/${id}`,
+      requestMethod: "DELETE",
     });
   }
 
-  function getAllTracks(headers) {
+  function createTodo( body ) {
     return request({
-      url: "/tracks",
-      requestMethod: "GET",
-      headers: headers,
-    });
-  }
-
-  function createTrack(headers, data) {
-    return axios.post("http://localhost:4000/tracks", data, {
-      headers: headers,
-    });
-  }
-
-  function deleteTrack(headers, data) {
-    return axios.delete(`http://localhost:4000/tracks/${data}`, {
-      headers: headers,
-    });
-  }
-
-  function likeTrack(headers, data) {
-    return axios.put(
-      `http://localhost:4000/tracks/${data.track}/like`,
-      data,
-      { headers: headers },
-    );
-  }
-
-  function fetchPlaylistById(headers, data) {
-    return request({
-      url: "/playlist/" + data,
-      requestMethod: "GET",
-      headers: headers,
-    });
-  }
-
-  function fetchTrackById(headers, data) {
-    return request({
-      url: "/track/" + data,
-      requestMethod: "GET",
-      headers: headers,
-    });
-  }
-
-  function unlikeTrack(headers, data) {
-    return axios.put(
-      `http://localhost:4000/tracks/${data.track}/unlike`,
-      data,
-      { headers: headers },
-    );
-  }
-
-  function fetchLikedTracks(headers, userId) {
-    return axios.get(`http://localhost:4000/tracks/${userId}/liked`, {
-      headers: headers,
-    });
-  }
-
-  function createPlaylist({ headers, body }) {
-    return request({
-      url: "/playlists",
+      url: "/",
       requestMethod: "POST",
-      body: body,
-      headers: headers,
+      body: body
     });
   }
 
-  function fetchAllPlaylists(headers) {
+  function fetchTodoByUser( userId ) {
     return request({
-      url: "/playlists",
+      url: `?userId=${userId}`,
       requestMethod: "GET",
-      headers: headers,
-    });
-  }
-
-  function deletePlaylist(headers, data) {
-    return axios.delete(`http://localhost:4000/playlist/${data}`, {
-      headers: headers,
-    });
-  }
-
-  function addToList(headers, data) {
-    return axios.put(
-      `http://localhost:4000/playlist/${data.playListId}/add-playlist`,
-      data,
-      { headers: headers },
-    );
-  }
-  function removeTrackPlaylist(headers, data) {
-    return axios.put(
-      `http://localhost:4000/playlist/${data.playlist}/remove-playlist`,
-      data,
-      {
-      headers: headers,
     });
   }
 
   return {
-    signUp: signUp,
-    signOut: signOut,
-    editUser: editUser,
-    getAllTracks: getAllTracks,
-    fetchTrackById: fetchTrackById,
-    deleteTrack: deleteTrack,
-    createTrack: createTrack,
-    getUser: getUser,
-    likeTrack: likeTrack,
-    unlikeTrack: unlikeTrack,
-    fetchLikedTracks: fetchLikedTracks,
-    createPlaylist: createPlaylist,
-    fetchAllPlaylists: fetchAllPlaylists,
-    fetchPlaylistById: fetchPlaylistById,
-    addToList: addToList,
-    deletePlaylist: deletePlaylist,
-    removeTrackPlaylist: removeTrackPlaylist
+    fetchAllTodos: fetchAllTodos,
+    fetchTodo: fetchTodo,
+    updateTodo: updateTodo,
+    deleteTodo: deleteTodo,
+    createTodo: createTodo,
+    fetchTodoByUser: fetchTodoByUser
+
   };
 }
 
