@@ -20,7 +20,7 @@ export default function Home() {
       <div className="d-flex flex-row flex-wrap mb-1">
         <div className="col-1">2</div>
         <div className="col-6">hacer la compra</div>
-        <div class="col-1 text-center">
+        <div className="col-1 text-center">
           <input type="checkbox" value="" id="flexCheckDefault"/>
         </div>
         <div className="col-1"><button className="btn btn-secondary"><FiEdit /></button></div>

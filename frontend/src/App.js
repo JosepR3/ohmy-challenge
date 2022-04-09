@@ -8,7 +8,7 @@ import "./styles/index.scss";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import CreateTodo from "./pages/CreateTodo";
+import CreateTodo from "./pages/CreateTodo/CreateTodo";
 
 function App() {
   return (
