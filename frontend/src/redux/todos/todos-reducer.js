@@ -10,7 +10,6 @@ import {
 export default function todosReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TODO_LIST:
-      console.log(action.payload)
       return {
         ...state,
         todosList: action.payload,
@@ -19,12 +18,14 @@ export default function todosReducer(state = initialState, action) {
       console.log(action.payload)
       return {
       ...state,
-      todosList: [...state.todoList, action.payload]
+      todosList: [...state.todosList, action.payload]
       };
     case EDIT_TODO:
+      console.log(action.payload.id)
       return {
         ...state,
-        error: action.payload,
+          ...state.todosList,
+            [action.payload.id - 1]: action.payload
       };
     case DELETE_TODO:
       return {

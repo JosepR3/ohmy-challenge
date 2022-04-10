@@ -1,12 +1,16 @@
 import * as TodosTypes from "./todos-types";
 import api from "../../api";
 
-export function setTodosList(result) {
+export function setTodosListSuccess(result) {
   return { type: TodosTypes.SET_TODO_LIST, payload: result };
 }
 
-export function setTodo(todoValues) {
+export function addTodoSuccess(todoValues) {
   return { type: TodosTypes.ADD_TODO, payload: todoValues };
+}
+
+export function updateTodoSuccess( todoValues ){
+  return { type: TodosTypes.EDIT_TODO, payload: todoValues };
 }
 
 export function deleteTodo(id) {
@@ -18,7 +22,7 @@ export function fetchAllTodos() {
     const res = await api.fetchAllTodos();
 
       if(res.data){
-        dispatch(setTodosList(res.data))
+        dispatch(setTodosListSuccess(res.data))
       }
       else {
         console.log("error")
@@ -29,6 +33,13 @@ export function fetchAllTodos() {
 export function addTodo(todoValues) {
   return async function addTodoThunk(dispatch) {
     
-      dispatch(setTodo(todoValues));
+      dispatch(addTodoSuccess(todoValues));
   };
+}
+
+export function updateTodo( todoValues){
+  return async function updateTodoThunk(dispatch){
+    console.log(todoValues)
+    dispatch(updateTodoSuccess(todoValues))
+  }
 }
