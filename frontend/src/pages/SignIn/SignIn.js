@@ -28,7 +28,7 @@ export default function SignIn(){
               required
             />
           <div className="d-flex justify-content-end mb-3">
-            <a className="" href="#">
+            <a className="" href="/">
               Did you forget your password?
             </a>
           </div>

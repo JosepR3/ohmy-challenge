@@ -1,8 +1,12 @@
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import * as ROUTES from "./routes";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles/index.scss";
+
+import { fetchAllTodos } from "./redux/todos/todos-actions";
 
 //PAGE COMPONENTS
 import Home from "./pages/Home";
@@ -11,6 +15,12 @@ import SignIn from "./pages/SignIn";
 import CreateTodo from "./pages/CreateTodo/CreateTodo";
 
 function App() {
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(fetchAllTodos());
+  },[])
+
   return (
     <>
       <Routes>

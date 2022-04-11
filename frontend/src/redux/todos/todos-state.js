@@ -4,6 +4,7 @@ const initialState = {
     userId: 0,
     title: "",
     completed: false,
+    edit: false
   }
 }
 

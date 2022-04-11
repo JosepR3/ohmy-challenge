@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 
 // Redux
 import { todosSelector } from "../../redux/todos/todos-selector";
-import { addTodo } from "../../redux/todos/todos-actions";
+import { addTodo, updateTodo } from "../../redux/todos/todos-actions";
 
 import todoSchema from "./todoSchema";
 import * as ROUTES from "../../routes";
@@ -16,19 +16,25 @@ export default function CreateTodoForm() {
   const dispatch = useDispatch();
 
   const { todo } = useSelector(todosSelector);
-  console.log(todo)
+
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       userId: todo?.userId,
+      id: todo?.id,
       title: todo?.title,
       completed: todo?.completed,
+      edit: todo?.edit
     },
     validationSchema: todoSchema,
     onSubmit: (values, { setSubmitting }) => {
-      console.log(values)
-      dispatch(addTodo(values));
+      if(values.edit){
+        dispatch(updateTodo(values))
+      }
+      else{
+        dispatch(addTodo(values));
+      }
       setSubmitting(true);
       setHasSubmitted(true);
     },
@@ -67,11 +73,8 @@ export default function CreateTodoForm() {
         id="completed"
         name="completed"
         type="checkbox"
-        value={formik.values.completed}
+        checked={formik.values.completed}
         onChange={formik.handleChange}
-        // handleBlur={formik.handleBlur}
-        // hasErrorMessage={formik.touched.completed}
-        // errorMessage={formik.errors.completed}
       />
       <button
         className="btn btn-primary my-2"

@@ -1,10 +1,10 @@
 import initialState from "./todos-state";
 import {
   SET_TODO_LIST,
+  SET_TODO,
   ADD_TODO,
   EDIT_TODO,
   DELETE_TODO,
-
 } from "./todos-types";
 
 export default function todosReducer(state = initialState, action) {
@@ -14,24 +14,37 @@ export default function todosReducer(state = initialState, action) {
         ...state,
         todosList: action.payload,
       };
+    case SET_TODO:
+      return {
+        ...state,
+        todo: action.payload,
+      };
     case ADD_TODO:
+      return {
+        ...state,
+        todosList: [...state.todosList, action.payload],
+      };
+    case EDIT_TODO: {
+      const index = action.payload.id - 1;
+      const newArray = [...state.todosList];
+      newArray[index] = action.payload;
+      console.log(newArray);
+      return {
+        ...state,
+        todosList: newArray,
+      };
+    }
+    case DELETE_TODO: {
       console.log(action.payload)
-      return {
-      ...state,
-      todosList: [...state.todosList, action.payload]
-      };
-    case EDIT_TODO:
-      console.log(action.payload.id)
+      const index = action.payload - 1;
+      console.log(state.todosList)
+      state.todosList.splice(index, 1);
+
       return {
         ...state,
-          ...state.todosList,
-            [action.payload.id - 1]: action.payload
+        todosList: state.todosList,
       };
-    case DELETE_TODO:
-      return {
-        ...state,
-        state: null,
-      };
+    }
     default:
       return state;
   }

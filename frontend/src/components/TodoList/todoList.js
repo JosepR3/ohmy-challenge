@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import { BsTrash } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";
 
 // Redux
 import { todosSelector } from "../../redux/todos/todos-selector";
 import { updateTodo } from "../../redux/todos/todos-actions";
 
+import EditButton from "../EditButton/editButton";
+import DeleteModal from "../DeleteModal/deleteModal";
+import { BsTrash } from "react-icons/bs";
+
+
 export default function TodoList() {
   const dispatch = useDispatch();
   const { todosList } = useSelector(todosSelector);
-
+  const [idDelete, setIdDelete] = useState(null)
+  const [show, setShow] = useState(false);
+  
   function handleCheckbox(values) {
     values.completed = !values.completed
     dispatch(updateTodo(values))
-    
   }
-
+  
   return (
     <>
+      { show === true ? <DeleteModal id={idDelete} show={show} onClose={() => setShow(false)}/> : null}
       {todosList &&
         todosList.map((todo) => {
           return (
@@ -30,17 +34,27 @@ export default function TodoList() {
                 <input
                   type="checkbox"
                   checked={todo?.completed}
-                  onChange={(e) => handleCheckbox(todo)}
+                  onChange={() => handleCheckbox(todo)}
                   id="flexCheckDefault"
                 />
               </div>
               <div className="col-1">
-                <button className="btn btn-secondary">
-                  <FiEdit />
-                </button>
+                <EditButton
+                  userId={todo?.userId}
+                  id={todo?.id}
+                  title={todo?.title}
+                  completed={todo?.completed}
+                  edit={true}
+                />
               </div>
               <div className="col-1">
-                <button className="btn btn-danger">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    setIdDelete(todo?.id);
+                    setShow(true);
+                  }}
+                >
                   <BsTrash />
                 </button>
               </div>
