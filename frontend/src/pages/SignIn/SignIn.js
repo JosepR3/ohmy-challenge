@@ -1,21 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 
 import * as ROUTES from "../../routes";
 
 export default function SignIn(){
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const emailAdmin = "joseprrr@gmail.com"
+  const passwordAdmin = "123456"
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  })
+
+  function handleSubmit(e){
+    e.preventDefault();
+    if(user.email === emailAdmin && user.password === passwordAdmin){
+      navigate(ROUTES.HOME);
+    }
+    else{
+      console.log("you have to sign-up")
+    }
+  }
+
+  function handleInput(e){
+    const { target } = e;
+    const { name, value } = target;
+
+    const newUser = {
+      ...user,
+      [name]: value,
+    };
+    setUser(newUser)
+  }
   return (
     <main className="container text-center">
       <section className="container px-5 py-2">
         <h1 className="my-4">Sign in</h1>
-        <form className="d-flex flex-column px-5">
+        <form className="d-flex flex-column px-5" onSubmit={handleSubmit}>
             <input
               className="auth__input"
               name="email"
               type="email"
               placeholder="Email"
-              // value={email}
-              // onChange={handleSetEmail}
+              value={user.email}
+              onChange={handleInput}
               required
             />
             <input
@@ -23,8 +54,8 @@ export default function SignIn(){
               name="password"
               type="password"
               placeholder="Password"
-              // value={password}
-              // onChange={handleSetPassword}
+              value={user.password}
+              onChange={handleInput}
               required
             />
           <div className="d-flex justify-content-end mb-3">
@@ -35,7 +66,6 @@ export default function SignIn(){
           <button
             className="btn btn-primary my-2"
             type="submit"
-            variant="log-color"
             // disabled={isLoading}
           >
             Sign in
